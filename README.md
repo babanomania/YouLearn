@@ -2,6 +2,10 @@
 
 A YouTube based learning bot, that can summarize a youtube videos (based on captions) and then answer questions on the video based on the data it has learnt
 
+Here are the screenshots, where it is summarizing and answering questions based on the amazing podcast between Abhijit Chawda and Abhijit Iyer-Mitra
+
+https://www.youtube.com/watch?v=1TCnTKEZmyQ
+
 | Summarizing Mode    | QA Mode |
 | -------- | ------- |
 | ![init mode](images/init.png)  | ![qa mode](images/qa.png)    |
