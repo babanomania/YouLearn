@@ -10,7 +10,7 @@ https://www.youtube.com/watch?v=1TCnTKEZmyQ
 | -------- | ------- |
 | ![init mode](images/init.png)  | ![qa mode](images/qa.png)    |
 
-# How to run
+## How to run
 
 * Prepare a venv
 ```bash
