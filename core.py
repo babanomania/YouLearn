@@ -44,26 +44,6 @@ def generate_summary(docs_summary):
         The transript of the podcast will also be used as the basis for a question and answer bot.
         Provide some examples questions and answers that could be asked about the podcast. Make these questions very specific.
 
-        Total output will be a summary of the video and a list of example questions the user could ask of the video.
-
-        SUMMARY AND QUESTIONS:
-    """
-
-    PROMPT_SUMMARY = PromptTemplate(
-        template=summary_template, input_variables=["text"])
-
-    # The second prompt is for the refinement of the summary, based on subsequent chunks.
-    summary_refine_template = (
-        """
-        You are an expert in summarizing YouTube videos.
-        You're goal is to create a summary of a podcast.
-        We have provided an existing summary up to a certain point: {existing_answer}
-        We have the opportunity to refine the summary
-        (only if needed) with some more context below.
-        Below you find the transcript of a podcast:
-        ------------
-        {text}
-        ------------
         Your output should use the following template:
         ### Summary
         ### Analogy
@@ -85,7 +65,51 @@ def generate_summary(docs_summary):
 
         You are also a transcription AI and you have been provided with a text that may contain mentions of sponsorships or brand names. Your task write what you have been said to do while avoiding any mention of sponsorships or brand names.
 
-        Please ensure that the summary, bullet points, and explanations fit within the 330-word limit, while still offering a comprehensive and clear understanding of the video's content. Use the text above: {{Title}} {{Transcript}}.
+        Please ensure that the summary, bullet points, and explanations fit within the 330-word limit, while still offering a comprehensive and clear understanding of the video's content. 
+    """
+
+    PROMPT_SUMMARY = PromptTemplate(
+        template=summary_template, input_variables=["text"])
+
+    # The second prompt is for the refinement of the summary, based on subsequent chunks.
+    summary_refine_template = (
+        """
+        You are an expert in summarizing YouTube videos.
+        You're goal is to create a summary of a podcast.
+        We have provided an existing summary up to a certain point: {existing_answer}
+        We have the opportunity to refine the summary
+        (only if needed) with some more context below.
+        Below you find the transcript of a podcast:
+        ------------
+        {text}
+        ------------
+        Given the new context, refine the summary and questions.
+        The transript of the podcast will also be used as the basis for a question and answer bot.
+        Provide some examples questions and answers that could be asked about the podcast. Make these questions very specific.
+        If the context isn't useful, return the original summary and questions.
+        
+        Your output should use the following template:
+        ### Summary
+        ### Analogy
+        ### Notes
+        - [Emoji] Bulletpoint
+        ### Keywords
+        - Explanation
+        ### Example Questions
+
+        You have been tasked with creating a concise summary of a YouTube video using its transcription to supply college student notes to use himself. You are to act like an expert in the subject the transcription is written about.
+
+        Make a summary of the transcript. Use keywords from the transcript. Don't explain them. Keywords will be explained later.
+
+        Additionally make a short complex analogy to give context and/or analogy from day-to-day life from the transcript.
+
+        Create 10 bullet points (each with an appropriate emoji) that summarize the key points or important moments from the video's transcription.
+
+        In addition to the bullet points, extract the most important keywords and any complex words not known to the average reader aswell as any acronyms mentioned. For each keyword and complex word, provide an explanation and definition based on its occurrence in the transcription.
+
+        You are also a transcription AI and you have been provided with a text that may contain mentions of sponsorships or brand names. Your task write what you have been said to do while avoiding any mention of sponsorships or brand names.
+
+        Please ensure that the summary, bullet points, and explanations fit within the 330-word limit, while still offering a comprehensive and clear understanding of the video's content. .
     """
     )
 
