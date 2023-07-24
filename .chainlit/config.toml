@@ -19,7 +19,7 @@ user_env = []
 name = "YouLearn"
 
 # Description of the app and chatbot. This is used for HTML tags.
-# description = "An AI bot that helps you learn content from youtube faster and better"
+description = "An AI bot that helps you learn content from youtube faster and better"
 
 # The default value for the expand messages settings.
 default_expand_messages = false
@@ -28,7 +28,7 @@ default_expand_messages = false
 hide_cot = false
 
 # Link to your github repo. This will add a github button in the UI's header.
-# github = ""
+github = "https://github.com/babanomania/YouLearn"
 
 [meta]
 generated_by = "0.4.101"

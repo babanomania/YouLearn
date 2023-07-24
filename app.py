@@ -1,7 +1,7 @@
 
 import chainlit as cl
 
-from core import load_video_captions, tokeize_as_summary, tokeize_as_qa, generate_summary, create_qa_chain
+from lib.core import load_video_captions, tokeize_as_summary, tokeize_as_qa, generate_summary, create_qa_chain
 
 # take environment variables from .env.
 from dotenv import load_dotenv

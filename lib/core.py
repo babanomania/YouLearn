@@ -1,12 +1,12 @@
 
 from langchain.text_splitter import TokenTextSplitter
-from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import YoutubeLoader
 from langchain.prompts import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
+from lib.model import get_llm
 
 
 def load_video_captions(url):
@@ -119,11 +119,16 @@ def generate_summary(docs_summary):
     )
 
     # Initialize LLM
-    llm_summary = ChatOpenAI(model_name='gpt-3.5-turbo-16k', temperature=0.3)
+    llm_summary = get_llm()
 
     # Initialize summarization chain
     summarize_chain = load_summarize_chain(
-        llm=llm_summary, chain_type="refine", verbose=True, question_prompt=PROMPT_SUMMARY, refine_prompt=PROMPT_SUMMARY_REFINE)
+        llm=llm_summary,
+        chain_type="refine",
+        verbose=True,
+        question_prompt=PROMPT_SUMMARY,
+        refine_prompt=PROMPT_SUMMARY_REFINE
+    )
     summary = summarize_chain.run(docs_summary)
 
     return summary
@@ -132,13 +137,15 @@ def generate_summary(docs_summary):
 def create_qa_chain(docs_qa):
 
     # Create the LLM model for the question answering
-    llm_question_answer = ChatOpenAI(
-        temperature=0.2, model="gpt-3.5-turbo-16k")
+    llm_question_answer = get_llm()
 
     # Create the vector database and RetrievalQA Chain
     embeddings = OpenAIEmbeddings()
     db = FAISS.from_documents(docs_qa, embeddings)
     qa = RetrievalQA.from_chain_type(
-        llm=llm_question_answer, chain_type="stuff", retriever=db.as_retriever())
+        llm=llm_question_answer,
+        chain_type="stuff",
+        retriever=db.as_retriever()
+    )
 
     return qa
